@@ -11,7 +11,7 @@ public class HealthManager : MonoBehaviour
 
     float timer = 0f;
 
-    public TMP_Text healthText;
+    //public TMP_Text healthText;
     public Image healthBar;
 
     // Update is called once per frame
@@ -34,7 +34,7 @@ public class HealthManager : MonoBehaviour
                     // print(index);
                     health--;
                     // print("health: " + health);
-                    healthText.text = "Health: " + health;
+                    //healthText.text = "Health: " + health;
                     healthBar.fillAmount = health / 10f;
 
                     // reset our immunity timer
