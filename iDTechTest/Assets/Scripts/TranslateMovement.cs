@@ -96,4 +96,10 @@ public class TranslateMovement : NetworkBehaviour
             physicsComponent.AddForce(Vector3.back * speed);
         }
     }
+
+    public override void OnStartLocalPlayer()
+    {
+        base.OnStartLocalPlayer();
+        gameObject.tag = "LocalPlayer";
+    }
 }

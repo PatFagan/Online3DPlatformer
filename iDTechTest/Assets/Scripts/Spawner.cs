@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class Spawner : MonoBehaviour
+public class Spawner : NetworkBehaviour
 {
     public GameObject spawnedObject;
     public GameObject[] spawnedObjectArray;
@@ -11,6 +12,7 @@ public class Spawner : MonoBehaviour
     int numberOfSpawnedObjects = 0;
 
     bool spawningInProgress = false;
+    bool spawnTriggered = false;
 
     IEnumerator Spawn()
     {
@@ -19,7 +21,8 @@ public class Spawner : MonoBehaviour
         for (int index = 0; index < spawnedObjectArray.Length; index++)
         {
             yield return new WaitForSeconds(.5f);
-            Instantiate(spawnedObjectArray[index], new Vector3(Random.Range(xMin, xMax), Random.Range(0, 0), Random.Range(zMin, zMax)), spawnedObject.transform.rotation);
+            GameObject nextSpawn = Instantiate(spawnedObjectArray[index], new Vector3(Random.Range(xMin, xMax), Random.Range(0, 0), Random.Range(zMin, zMax)), spawnedObject.transform.rotation);
+            NetworkServer.Spawn(nextSpawn);
         }
         spawningInProgress = false;
     }
@@ -27,9 +30,18 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (spawningInProgress == false)
+        if (spawningInProgress == false && spawnTriggered == true)
         {
             StartCoroutine(Spawn());
+        }
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.tag == "Player")
+        {
+            // int numOfConnectedPlayers = Network.connections.Length;
+            spawnTriggered = true;
         }
     }
 }

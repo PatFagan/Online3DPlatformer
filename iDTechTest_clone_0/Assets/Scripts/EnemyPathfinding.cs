@@ -11,7 +11,7 @@ public class EnemyPathfinding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        player = GameObject.Find("Player"); // find the player
+        player = GameObject.FindGameObjectWithTag("Player"); // find the player
         ai.SetDestination(player.transform.position); // set the ai to chase the player
     }
 }

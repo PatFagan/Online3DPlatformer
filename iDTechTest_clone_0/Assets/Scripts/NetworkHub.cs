@@ -10,6 +10,8 @@ public class NetworkHub : NetworkBehaviour
     public NetworkManager networkManager;
     public TMP_InputField lobbyNameInput;
     public GameObject networkingInterface;
+    public GameObject optionsInterface;
+    bool optionsMenuEnabled = false;
 
     // Start is called before the first frame update
     void Start()
@@ -21,8 +23,12 @@ public class NetworkHub : NetworkBehaviour
     void Update()
     {
         // if escape is pressed, open exit networking menu
-        // make exit networking menu have an option to leave a lobby
-        // or to exit the game entirely
+
+        if (Input.GetButtonDown("Escape") && networkingInterface.activeSelf == false)
+        {
+            optionsMenuEnabled = !optionsMenuEnabled;
+            optionsInterface.SetActive(optionsMenuEnabled);
+        }
     }
 
     public void StartLobbyAsHost()
@@ -46,5 +52,13 @@ public class NetworkHub : NetworkBehaviour
             networkManager.StopHost();
         else
             networkManager.StopClient();
+
+        networkingInterface.SetActive(true);
+        optionsInterface.SetActive(false);
+    }
+
+    public void ExitApplication()
+    {
+        Application.Quit();
     }
 }
