@@ -97,7 +97,9 @@ public class TranslateMovement : NetworkBehaviour
             physicsComponent.AddForce(Vector3.back * moveSpeed * speedScalar * Time.deltaTime);
         }
 
-        transform.LookAt(Vector3.Lerp(transform.position, new Vector3(physicsComponent.velocity.x * dashForce, 0f, physicsComponent.velocity.z * dashForce), rotLerp));
+        // rotate player in movement direction
+        transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, 
+            Quaternion.LookRotation(new Vector3(physicsComponent.velocity.x, 0f, physicsComponent.velocity.z)), Time.deltaTime * rotLerp);
     }
 
     public override void OnStartLocalPlayer()
