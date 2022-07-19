@@ -21,7 +21,7 @@ public class PlayerCamera : MonoBehaviour
 
         if (player)
         {
-            print(player);
+            // print(player);
             vCam.Follow = player.transform;
             vCam.LookAt = player.transform;
         }

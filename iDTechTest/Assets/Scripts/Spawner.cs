@@ -38,7 +38,8 @@ public class Spawner : NetworkBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.tag == "Player")
+        // maybe change || to && so spawning requires both?
+        if (collider.gameObject.tag == "Player" || collider.gameObject.tag == "LocalPlayer")
         {
             // int numOfConnectedPlayers = Network.connections.Length;
             spawnTriggered = true;

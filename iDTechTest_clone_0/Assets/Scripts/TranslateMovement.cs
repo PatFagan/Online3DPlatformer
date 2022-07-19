@@ -95,6 +95,8 @@ public class TranslateMovement : NetworkBehaviour
         {
             physicsComponent.AddForce(Vector3.back * speed);
         }
+
+        transform.LookAt(Vector3.Lerp(transform.position, new Vector3(physicsComponent.velocity.x * dashForce, 0f, physicsComponent.velocity.z * dashForce), .1f));
     }
 
     public override void OnStartLocalPlayer()
