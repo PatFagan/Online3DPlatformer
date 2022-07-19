@@ -259,7 +259,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  speed: 50
+  moveSpeed: 100
+  rotLerp: 0.1
+  speedScalar: 100
   physicsComponent: {fileID: 4816001874785013886}
   jumpForce: 3000
   dashForce: 400

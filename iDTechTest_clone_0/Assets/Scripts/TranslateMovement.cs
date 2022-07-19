@@ -6,7 +6,7 @@ using Mirror;
 public class TranslateMovement : NetworkBehaviour
 {
     // movement variables
-    public float speed;
+    public float moveSpeed, rotLerp, speedScalar;
     public Rigidbody physicsComponent;
 
     // jump variables
@@ -46,17 +46,17 @@ public class TranslateMovement : NetworkBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             jumpSound.Play();
-            physicsComponent.AddForce(Vector3.up * jumpForce);
+            physicsComponent.AddForce(Vector3.up * jumpForce * speedScalar * Time.deltaTime);
         }
         else if (Input.GetButtonUp("Jump"))
         {
-            physicsComponent.AddForce(Vector3.down * (jumpForce / 2));
+            physicsComponent.AddForce(Vector3.down * (jumpForce / 2) * speedScalar * Time.deltaTime);
         }
 
         // increase fall speed
         if (physicsComponent.velocity.y < -0.1 && dashCooldown <= 0)
         {
-            physicsComponent.velocity += Vector3.up * Physics2D.gravity.y * (jumpForce / 400f) * Time.deltaTime;
+            physicsComponent.velocity += Vector3.up * Physics2D.gravity.y * (jumpForce / 300f) * Time.deltaTime;
         }
     }
 
@@ -67,7 +67,8 @@ public class TranslateMovement : NetworkBehaviour
         if (Input.GetButtonDown("Dash") && dashCooldown <= 0)
         {
             dashSound.Play();
-            physicsComponent.AddForce(new Vector3(physicsComponent.velocity.x * dashForce, 0f, physicsComponent.velocity.z * dashForce));
+            physicsComponent.AddForce(new Vector3(physicsComponent.velocity.x * dashForce * speedScalar * Time.deltaTime, 
+                0f, physicsComponent.velocity.z * dashForce * speedScalar * Time.deltaTime));
             dashCooldown = dashTimeout;
             physicsComponent.velocity = new Vector3(0f, 0f, 0f);
         }
@@ -79,24 +80,24 @@ public class TranslateMovement : NetworkBehaviour
         // x axis
         if (Input.GetAxis("Horizontal") > 0)
         {
-            physicsComponent.AddForce(Vector3.right * speed);
+            physicsComponent.AddForce(Vector3.right * moveSpeed * speedScalar * Time.deltaTime);
         }
         else if (Input.GetAxis("Horizontal") < 0)
         {
-            physicsComponent.AddForce(Vector3.left * speed);
+            physicsComponent.AddForce(Vector3.left * moveSpeed * speedScalar * Time.deltaTime);
         }
 
         // z axis
         if (Input.GetAxis("Vertical") > 0)
         {
-            physicsComponent.AddForce(Vector3.forward * speed);
+            physicsComponent.AddForce(Vector3.forward * moveSpeed * speedScalar * Time.deltaTime);
         }
         else if (Input.GetAxis("Vertical") < 0)
         {
-            physicsComponent.AddForce(Vector3.back * speed);
+            physicsComponent.AddForce(Vector3.back * moveSpeed * speedScalar * Time.deltaTime);
         }
 
-        transform.LookAt(Vector3.Lerp(transform.position, new Vector3(physicsComponent.velocity.x * dashForce, 0f, physicsComponent.velocity.z * dashForce), .1f));
+        transform.LookAt(Vector3.Lerp(transform.position, new Vector3(physicsComponent.velocity.x * dashForce, 0f, physicsComponent.velocity.z * dashForce), rotLerp));
     }
 
     public override void OnStartLocalPlayer()
