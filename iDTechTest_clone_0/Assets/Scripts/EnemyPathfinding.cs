@@ -23,7 +23,9 @@ public class EnemyPathfinding : MonoBehaviour
     {
         player1 = GameObject.FindGameObjectWithTag("LocalPlayer"); // find the player
         player2 = GameObject.FindGameObjectWithTag("Player"); // find the player
-        ai.SetDestination(currentTarget.transform.position); // set the ai to chase the player
+
+        if (player1 || player2)
+            ai.SetDestination(currentTarget.transform.position); // set the ai to chase the player
     }
 
     IEnumerator TargetSwap()
@@ -35,7 +37,9 @@ public class EnemyPathfinding : MonoBehaviour
         else if (currentTarget == player2)
             currentTarget = player1;
 
-        print("swap");
-        StartCoroutine(TargetSwap());
+        print("swap"); 
+        
+        if (player1 || player2)
+            StartCoroutine(TargetSwap());
     }
 }
