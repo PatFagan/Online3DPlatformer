@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Mirror;
 
-public class HealthManager : MonoBehaviour
+public class HealthManager : NetworkBehaviour
 {
-    public int health;
+    public int health, maxHealth;
     public string[] damageTag = { "tag", "tag", "tag", "tag" };
+    public bool destroyOnDeath;
 
     float timer = 0f;
 
@@ -19,23 +21,43 @@ public class HealthManager : MonoBehaviour
     {
         timer -= Time.deltaTime;
         // print(timer);
+
+        HealthCheck();
+    }
+
+    void HealthCheck()
+    {
+        // if dead
+        if (health <= 0f)
+        {
+            // if enemy, etc. destroy
+            if (destroyOnDeath)
+            {
+                StartCoroutine(Die());
+            }
+        }
+    }
+
+    IEnumerator Die()
+    {
+        yield return new WaitForSeconds(.1f);
+        NetworkServer.Destroy(gameObject);
     }
 
     void OnTriggerEnter(Collider collider)
     {
-        // print("collided");
-
         if (timer < 0)
         {
             for (int index = 0; index < damageTag.Length; index++)
             {
                 if (collider.gameObject.tag == damageTag[index])
                 {
-                    // print(index);
+                    // take off health
                     health--;
-                    // print("health: " + health);
-                    //healthText.text = "Health: " + health;
-                    healthBar.fillAmount = health / 10f;
+
+                    // update health bar if there is one
+                    if (healthBar)
+                        healthBar.fillAmount = health / 10f;
 
                     // reset our immunity timer
                     timer = 1f;

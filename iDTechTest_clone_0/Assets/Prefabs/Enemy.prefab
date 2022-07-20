@@ -11,11 +11,12 @@ GameObject:
   - component: {fileID: 3435348672564505162}
   - component: {fileID: 3435348672564505163}
   - component: {fileID: 3435348672564505160}
-  - component: {fileID: 3435348672564505161}
   - component: {fileID: 3435348672564505166}
+  - component: {fileID: -7881925443620043347}
   - component: {fileID: 3435348672564505164}
-  - component: {fileID: 3435348672564505165}
+  - component: {fileID: 3435348672564505161}
   - component: {fileID: 3435348672564505167}
+  - component: {fileID: 3435348672564505165}
   - component: {fileID: 8456931173995086901}
   - component: {fileID: 3243528042092883947}
   m_Layer: 0
@@ -90,6 +91,51 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3435348672564505166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3435348672564505206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08a3689669df48241b4f526e239f6fd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-7881925443620043347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3435348672564505206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1b3fcccdd13fb49927c6d073fb34e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  health: 1
+  maxHealth: 1
+  damageTag:
+  - PlayerProjectile
+  destroyOnDeath: 1
+  healthBar: {fileID: 0}
+--- !u!114 &3435348672564505164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3435348672564505206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cd2814e599998444ac898e5244bc491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ai: {fileID: 3435348672564505165}
 --- !u!136 &3435348672564505161
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -104,31 +150,20 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3435348672564505166
-MonoBehaviour:
+--- !u!136 &3435348672564505167
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3435348672564505206}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08a3689669df48241b4f526e239f6fd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3435348672564505164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3435348672564505206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cd2814e599998444ac898e5244bc491, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ai: {fileID: 3435348672564505165}
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &3435348672564505165
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -151,20 +186,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!136 &3435348672564505167
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3435348672564505206}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8456931173995086901
 MonoBehaviour:
   m_ObjectHideFlags: 0

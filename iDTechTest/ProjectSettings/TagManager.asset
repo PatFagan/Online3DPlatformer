@@ -10,6 +10,8 @@ TagManager:
   - PlayerProjectile
   - Spawner
   - LocalPlayer
+  - Ground
+  - Ability
   layers:
   - Default
   - TransparentFX

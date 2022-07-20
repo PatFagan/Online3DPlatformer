@@ -5,7 +5,6 @@ using Mirror;
 
 public class Spawner : NetworkBehaviour
 {
-    public GameObject spawnedObject;
     public GameObject[] spawnedObjectArray;
     public float xMin, xMax, zMin, zMax;
 
@@ -14,14 +13,16 @@ public class Spawner : NetworkBehaviour
     bool spawningInProgress = false;
     bool spawnTriggered = false;
 
+    // start spawning
     IEnumerator Spawn()
     {
         spawningInProgress = true;
         yield return new WaitForSeconds(2f);
+        // spawn one of each object from the array
         for (int index = 0; index < spawnedObjectArray.Length; index++)
         {
             yield return new WaitForSeconds(.5f);
-            GameObject nextSpawn = Instantiate(spawnedObjectArray[index], new Vector3(Random.Range(xMin, xMax), Random.Range(0, 0), Random.Range(zMin, zMax)), spawnedObject.transform.rotation);
+            GameObject nextSpawn = Instantiate(spawnedObjectArray[index], new Vector3(Random.Range(xMin, xMax), Random.Range(0, 0), Random.Range(zMin, zMax)), spawnedObjectArray[index].transform.rotation);
             NetworkServer.Spawn(nextSpawn);
         }
         spawningInProgress = false;
@@ -38,6 +39,8 @@ public class Spawner : NetworkBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
+        // starts spawning once a player enters the spawner
+
         // maybe change || to && so spawning requires both?
         if (collider.gameObject.tag == "Player" || collider.gameObject.tag == "LocalPlayer")
         {

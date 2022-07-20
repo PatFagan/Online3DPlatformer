@@ -5,6 +5,7 @@ using UnityEngine;
 public class Shooting : MonoBehaviour
 {
     public GameObject projectile;
+    public PlayerAbilityTracker playerAbilitiesScript;
 
     // Update is called once per frame
     void Update()
@@ -12,7 +13,8 @@ public class Shooting : MonoBehaviour
         // spawn projectiles on button press
         if (Input.GetButtonDown("Shoot"))
         {
-            Instantiate(projectile, transform.position, Quaternion.identity);
+            if (playerAbilitiesScript.abilities["Fireball"] == true)
+                Instantiate(projectile, transform.position, Quaternion.identity);
         }
     }
 }

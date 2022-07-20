@@ -6,7 +6,7 @@ using Mirror;
 public class TranslateMovement : NetworkBehaviour
 {
     // movement variables
-    public float moveSpeed, rotLerp, speedScalar;
+    public float moveSpeed, rotLerp, speedScalar = 100f;
     public Rigidbody physicsComponent;
 
     // jump variables
@@ -46,11 +46,11 @@ public class TranslateMovement : NetworkBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             jumpSound.Play();
-            physicsComponent.AddForce(Vector3.up * jumpForce * speedScalar * Time.deltaTime);
+            physicsComponent.AddForce(Vector3.up * jumpForce * speedScalar * Time.deltaTime, ForceMode.Impulse);
         }
         else if (Input.GetButtonUp("Jump"))
         {
-            physicsComponent.AddForce(Vector3.down * (jumpForce / 2) * speedScalar * Time.deltaTime);
+            physicsComponent.AddForce(Vector3.down * (jumpForce / 2) * speedScalar * Time.deltaTime, ForceMode.Impulse);
         }
 
         // increase fall speed
@@ -68,7 +68,7 @@ public class TranslateMovement : NetworkBehaviour
         {
             dashSound.Play();
             physicsComponent.AddForce(new Vector3(physicsComponent.velocity.x * dashForce * speedScalar * Time.deltaTime, 
-                0f, physicsComponent.velocity.z * dashForce * speedScalar * Time.deltaTime));
+                0f, physicsComponent.velocity.z * dashForce * speedScalar * Time.deltaTime), ForceMode.Impulse);
             dashCooldown = dashTimeout;
             physicsComponent.velocity = new Vector3(0f, 0f, 0f);
         }
@@ -80,26 +80,29 @@ public class TranslateMovement : NetworkBehaviour
         // x axis
         if (Input.GetAxis("Horizontal") > 0)
         {
-            physicsComponent.AddForce(Vector3.right * moveSpeed * speedScalar * Time.deltaTime);
+            physicsComponent.AddForce(Vector3.right * moveSpeed * speedScalar * Time.deltaTime, ForceMode.Impulse);
         }
         else if (Input.GetAxis("Horizontal") < 0)
         {
-            physicsComponent.AddForce(Vector3.left * moveSpeed * speedScalar * Time.deltaTime);
+            physicsComponent.AddForce(Vector3.left * moveSpeed * speedScalar * Time.deltaTime, ForceMode.Impulse);
         }
 
         // z axis
         if (Input.GetAxis("Vertical") > 0)
         {
-            physicsComponent.AddForce(Vector3.forward * moveSpeed * speedScalar * Time.deltaTime);
+            physicsComponent.AddForce(Vector3.forward * moveSpeed * speedScalar * Time.deltaTime, ForceMode.Impulse);
         }
         else if (Input.GetAxis("Vertical") < 0)
         {
-            physicsComponent.AddForce(Vector3.back * moveSpeed * speedScalar * Time.deltaTime);
+            physicsComponent.AddForce(Vector3.back * moveSpeed * speedScalar * Time.deltaTime, ForceMode.Impulse);
         }
 
         // rotate player in movement direction
-        transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, 
-            Quaternion.LookRotation(new Vector3(physicsComponent.velocity.x, 0f, physicsComponent.velocity.z)), Time.deltaTime * rotLerp);
+        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        {
+            transform.rotation = Quaternion.Slerp(gameObject.transform.rotation,
+                Quaternion.LookRotation(new Vector3(physicsComponent.velocity.x, 0f, physicsComponent.velocity.z)), Time.deltaTime * rotLerp);
+        }
     }
 
     public override void OnStartLocalPlayer()

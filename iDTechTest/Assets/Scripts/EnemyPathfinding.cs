@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Mirror;
 
-public class EnemyPathfinding : MonoBehaviour
+public class EnemyPathfinding : NetworkBehaviour
 {
     public NavMeshAgent ai; // gets the ai component
     GameObject player1, player2, currentTarget; // player gameobject variable
