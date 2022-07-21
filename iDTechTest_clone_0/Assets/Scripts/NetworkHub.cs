@@ -13,17 +13,9 @@ public class NetworkHub : NetworkBehaviour
     public GameObject optionsInterface;
     bool optionsMenuEnabled = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //networkManager = transform.parent.gameObject.GetComponent<NetworkManager>();
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        // if escape is pressed, open exit networking menu
-
+        // if escape is pressed, open exit lobby menu
         if (Input.GetButtonDown("Escape") && networkingInterface.activeSelf == false)
         {
             optionsMenuEnabled = !optionsMenuEnabled;

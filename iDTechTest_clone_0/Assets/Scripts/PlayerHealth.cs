@@ -12,10 +12,11 @@ public class PlayerHealth : NetworkBehaviour
 
     float immunityTimer = 0f;
 
-    //public TMP_Text healthText;
     public Image healthBar;
 
     TranslateMovement playerMovementScript;
+
+    bool speedSet = false;
 
     void Start()
     {
@@ -46,12 +47,13 @@ public class PlayerHealth : NetworkBehaviour
         // if dead
         if (health <= 0f)
         {
-            playerMovementScript.speedScalar = 0.01f;
+            playerMovementScript.speedScalar = .5f;
+            speedSet = false;
         }
-        // if alive
-        else if (health > 0f)
+        else if (health > 0f && speedSet == false)
         {
-            playerMovementScript.speedScalar = 3f;
+            playerMovementScript.speedScalar = playerMovementScript.defaultSpeedScalar;
+            speedSet = true;
         }
     }
 

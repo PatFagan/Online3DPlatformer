@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class PlayerRevives : MonoBehaviour
 {
-    public PlayerHealth playerHealthScript;
+    PlayerHealth playerHealthScript;
+
+    void Start()
+    {
+        playerHealthScript = GetComponent<PlayerHealth>();
+    }
 
     void OnTriggerEnter(Collider collider)
     {

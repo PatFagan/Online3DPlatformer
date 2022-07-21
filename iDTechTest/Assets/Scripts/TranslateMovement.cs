@@ -6,13 +6,14 @@ using Mirror;
 public class TranslateMovement : NetworkBehaviour
 {
     // movement variables
-    public float moveSpeed, rotLerp, speedScalar = 100f;
+    float moveSpeed = 50, rotLerp = 100;
+    public float speedScalar = 3, defaultSpeedScalar = 3;
     public Rigidbody physicsComponent;
 
     // jump variables
     bool isGrounded;
     float distToGround, dashCooldown = 0;
-    public float jumpForce, dashForce, dashTimeout;
+    float jumpForce = 2000f, dashForce = 800f, dashTimeout = 40f;
 
     public AudioSource jumpSound;
     public AudioSource dashSound;
@@ -35,6 +36,19 @@ public class TranslateMovement : NetworkBehaviour
             Jump();
 
             Dash();
+        }
+    }
+
+    void WallClimb()
+    {
+        bool nearWall = Physics.Raycast(transform.position, Vector3.forward, 1f);
+
+        // wall climb
+        if (Input.GetButtonDown("Jump") && nearWall)
+        {
+            jumpSound.Play();
+            physicsComponent.AddForce(Vector3.up * jumpForce * speedScalar * Time.deltaTime, ForceMode.Impulse);
+            physicsComponent.AddForce(Vector3.back * speedScalar * Time.deltaTime, ForceMode.Impulse);
         }
     }
 
