@@ -21,15 +21,23 @@ public class CoinTracker : NetworkBehaviour
 
     void FixedUpdate()
     {
-        coinScore.text = coinsCollected.ToString(); // change the coin ui text
-        coinUI.fillAmount = coinsCollected / 10f;
+        if (isLocalPlayer)
+        {
+            coinScore.text = coinsCollected.ToString(); // change the coin ui text
+            coinUI.fillAmount = coinsCollected / 10f;
+        }
+        else if (!isLocalPlayer)
+        {
+            coinScore.text = ""; // change the coin ui text
+            coinUI.fillAmount = 0f;
+        }
     }
 
     // runs when a trigger has been triggered
     void OnTriggerEnter(Collider collider)
     {
         // check if the collider is the coin
-        if (collider.gameObject.tag == "Coin" && coinsCollected < coinMax)
+        if (collider.gameObject.tag == "Coin" && coinsCollected < coinMax && isLocalPlayer)
         {
             coinsCollected++; // add to the coin score
             NetworkServer.Destroy(collider.gameObject); // destroy the coin

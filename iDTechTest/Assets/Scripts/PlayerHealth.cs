@@ -20,6 +20,11 @@ public class PlayerHealth : NetworkBehaviour
     void Start()
     {
         playerMovementScript = GetComponent<TranslateMovement>();
+
+        if (!isLocalPlayer)
+        {
+            healthBar.fillAmount = 0f;
+        }
     }
 
     // Update is called once per frame
@@ -34,6 +39,10 @@ public class PlayerHealth : NetworkBehaviour
 
     void HealthCheck()
     {
+        // update health bar if there is one
+        if (healthBar)
+            healthBar.fillAmount = health / 10f;
+
         // if dead
         if (health <= 0f)
         {
@@ -58,10 +67,6 @@ public class PlayerHealth : NetworkBehaviour
                     {
                         // take off health
                         health--;
-
-                        // update health bar if there is one
-                        if (healthBar)
-                            healthBar.fillAmount = health / 10f;
 
                         // reset our immunity timer
                         immunityTimer = 1f;

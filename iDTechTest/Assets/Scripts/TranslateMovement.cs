@@ -22,6 +22,7 @@ public class TranslateMovement : NetworkBehaviour
     {
         physicsComponent = gameObject.GetComponent<Rigidbody>();
         distToGround = GetComponent<Collider>().bounds.extents.y;
+        gameObject.name = "Player";
     }
 
     // runs once per frame
@@ -98,7 +99,7 @@ public class TranslateMovement : NetworkBehaviour
         }
 
         // rotate player in movement direction
-        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        if (physicsComponent.velocity != Vector3.zero)
         {
             transform.rotation = Quaternion.Slerp(gameObject.transform.rotation,
                 Quaternion.LookRotation(new Vector3(physicsComponent.velocity.x, 0f, physicsComponent.velocity.z)), Time.deltaTime * rotLerp);
