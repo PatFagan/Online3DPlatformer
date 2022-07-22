@@ -92,7 +92,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 864770704272662225}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -191,7 +191,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1886060622269529495}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5000001
   m_Height: 2
@@ -262,9 +262,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  moveSpeed: 50
+  rotLerp: 100
   speedScalar: 3
   defaultSpeedScalar: 3
   physicsComponent: {fileID: 4816001874785013886}
+  jumpForce: 30
+  dashForce: 6
+  dashTimeout: 40
+  wallClimbDistance: 2
+  extraGravity: 0.25
   jumpSound: {fileID: 4816001874785013873}
   dashSound: {fileID: 4816001874785013872}
 --- !u!114 &9008163673965953405
@@ -286,7 +293,6 @@ MonoBehaviour:
   damageTag:
   - Enemy
   healthBar: {fileID: 7247313472619058140}
-  reviveToken: {fileID: 2439964324064464456, guid: 0de1c18918e388b46af9da9f96596ae8, type: 3}
 --- !u!114 &6776834848430293476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,7 +305,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ed74364b4ac46f48bf22eabc4c74e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealthScript: {fileID: 9008163673965953405}
 --- !u!114 &5646161579387858960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,7 +335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 6074739740281616390, guid: 63ac729b8056be54ba5b7f6db309265e, type: 3}
-  playerAbilitiesScript: {fileID: 0}
+  playerAbilitiesScript: {fileID: 6265081021790637524}
 --- !u!33 &4816001874785013882
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -680,7 +685,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ed74364b4ac46f48bf22eabc4c74e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealthScript: {fileID: 0}
 --- !u!114 &6265081021790637524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -743,7 +747,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2264399473749919204
 Transform:
   m_ObjectHideFlags: 0
@@ -1304,7 +1308,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8930971566430380956}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5

@@ -6,14 +6,20 @@ using Mirror;
 public class TranslateMovement : NetworkBehaviour
 {
     // movement variables
-    float moveSpeed = 50, rotLerp = 100;
-    public float speedScalar = 3, defaultSpeedScalar = 3;
+    public float moveSpeed = 50f, rotLerp = 100f;
+    public float speedScalar = 3f, defaultSpeedScalar = 3f;
     public Rigidbody physicsComponent;
 
     // jump variables
     bool isGrounded;
-    float distToGround, dashCooldown = 0;
-    float jumpForce = 2000f, dashForce = 800f, dashTimeout = 40f;
+    float distToGround, dashCooldown = 0f;
+    public float jumpForce = 2300f, dashForce = 800f, dashTimeout = 40f;
+    public float wallClimbDistance = 2f, extraGravity = 20f;
+
+    // wall jump variables
+    bool nearWall = false;
+    Vector3 wallDetectionDirection = Vector3.forward;
+    bool pauseWallRaycast = false;
 
     public AudioSource jumpSound;
     public AudioSource dashSound;
@@ -36,20 +42,36 @@ public class TranslateMovement : NetworkBehaviour
             Jump();
 
             Dash();
+
+            WallClimb();
         }
     }
 
     void WallClimb()
     {
-        bool nearWall = Physics.Raycast(transform.position, Vector3.forward, 1f);
+        if (!pauseWallRaycast)
+            wallDetectionDirection = transform.forward;
+
+        print(wallDetectionDirection);
+        print(nearWall);
+        nearWall = Physics.Raycast(transform.position, wallDetectionDirection, wallClimbDistance);
 
         // wall climb
         if (Input.GetButtonDown("Jump") && nearWall)
         {
             jumpSound.Play();
-            physicsComponent.AddForce(Vector3.up * jumpForce * speedScalar * Time.deltaTime, ForceMode.Impulse);
-            physicsComponent.AddForce(Vector3.back * speedScalar * Time.deltaTime, ForceMode.Impulse);
+            StartCoroutine(WallClimbForce());
         }
+    }
+
+    IEnumerator WallClimbForce()
+    {
+        pauseWallRaycast = true;
+        physicsComponent.AddForce(Vector3.up * jumpForce * speedScalar, ForceMode.Impulse);
+        //physicsComponent.AddForce(-transform.forward * jumpForce * 2/3 * speedScalar, ForceMode.Impulse);
+        yield return new WaitForSeconds(.15f);
+        //physicsComponent.AddForce(-transform.forward * jumpForce * 2/3 * speedScalar, ForceMode.Impulse);
+        pauseWallRaycast = false;
     }
 
     void Jump()
@@ -61,17 +83,17 @@ public class TranslateMovement : NetworkBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             jumpSound.Play();
-            physicsComponent.AddForce(Vector3.up * jumpForce * speedScalar * Time.deltaTime, ForceMode.Impulse);
+            physicsComponent.AddForce(Vector3.up * jumpForce * speedScalar, ForceMode.Impulse);
         }
-        else if (Input.GetButtonUp("Jump"))
+        else if (Input.GetButtonUp("Jump") && nearWall == false)
         {
-            physicsComponent.AddForce(Vector3.down * (jumpForce / 2) * speedScalar * Time.deltaTime, ForceMode.Impulse);
+            physicsComponent.AddForce(Vector3.down * (jumpForce / 3) * speedScalar, ForceMode.Impulse);
         }
 
         // increase fall speed
-        if (physicsComponent.velocity.y < -0.1 && dashCooldown <= 0)
+        if (physicsComponent.velocity.y < -0.1 && dashCooldown <= dashTimeout * 3/4)
         {
-            physicsComponent.velocity += Vector3.up * Physics2D.gravity.y * (jumpForce / 300f) * Time.deltaTime;
+            physicsComponent.velocity += Vector3.up * Physics2D.gravity.y * extraGravity;
         }
     }
 
@@ -82,8 +104,8 @@ public class TranslateMovement : NetworkBehaviour
         if (Input.GetButtonDown("Dash") && dashCooldown <= 0)
         {
             dashSound.Play();
-            physicsComponent.AddForce(new Vector3(physicsComponent.velocity.x * dashForce * speedScalar * Time.deltaTime, 
-                0f, physicsComponent.velocity.z * dashForce * speedScalar * Time.deltaTime), ForceMode.Impulse);
+            physicsComponent.AddForce(new Vector3(physicsComponent.velocity.x * dashForce * speedScalar, 
+                0f, physicsComponent.velocity.z * dashForce * speedScalar), ForceMode.Impulse);
             dashCooldown = dashTimeout;
             physicsComponent.velocity = new Vector3(0f, 0f, 0f);
         }
@@ -113,7 +135,7 @@ public class TranslateMovement : NetworkBehaviour
         }
 
         // rotate player in movement direction
-        if (physicsComponent.velocity != Vector3.zero)
+        if (new Vector3(physicsComponent.velocity.x, 0f, physicsComponent.velocity.z) != Vector3.zero && !nearWall)
         {
             transform.rotation = Quaternion.Slerp(gameObject.transform.rotation,
                 Quaternion.LookRotation(new Vector3(physicsComponent.velocity.x, 0f, physicsComponent.velocity.z)), Time.deltaTime * rotLerp);
