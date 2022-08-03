@@ -7,7 +7,7 @@ public class TranslateMovement : NetworkBehaviour
 {
     // movement variables
     public float moveSpeed = 50f, rotLerp = 100f;
-    public float speedScalar = 3f, defaultSpeedScalar = 3f;
+    public float speedScalar = 200f, defaultSpeedScalar = 200f;
     public Rigidbody physicsComponent;
 
     // jump variables
@@ -45,6 +45,11 @@ public class TranslateMovement : NetworkBehaviour
 
             WallClimb();
         }
+    }
+
+    void FixedUpdate()
+    {
+        FallSpeed();
     }
 
     void WallClimb()
@@ -89,11 +94,14 @@ public class TranslateMovement : NetworkBehaviour
         {
             physicsComponent.AddForce(Vector3.down * (jumpForce / 4) * speedScalar, ForceMode.Force);
         }
+    }
 
+    void FallSpeed()
+    {
         // increase fall speed
         if (physicsComponent.velocity.y < -0.1 && dashCooldown <= dashTimeout * 3/4)
         {
-            physicsComponent.velocity += Vector3.up * Physics2D.gravity.y * extraGravity;
+            physicsComponent.velocity += Vector3.up * Physics.gravity.y * extraGravity;
         }
     }
 
