@@ -52,8 +52,8 @@ public class TranslateMovement : NetworkBehaviour
         if (!pauseWallRaycast)
             wallDetectionDirection = transform.forward;
 
-        print(wallDetectionDirection);
-        print(nearWall);
+        //print(wallDetectionDirection);
+        //print(nearWall);
         nearWall = Physics.Raycast(transform.position, wallDetectionDirection, wallClimbDistance);
 
         // wall climb

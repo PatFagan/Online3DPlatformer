@@ -271,7 +271,7 @@ MonoBehaviour:
   dashForce: 6
   dashTimeout: 40
   wallClimbDistance: 2
-  extraGravity: 0.25
+  extraGravity: 0.12
   jumpSound: {fileID: 4816001874785013873}
   dashSound: {fileID: 4816001874785013872}
 --- !u!114 &9008163673965953405
