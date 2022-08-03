@@ -67,10 +67,10 @@ public class TranslateMovement : NetworkBehaviour
     IEnumerator WallClimbForce()
     {
         pauseWallRaycast = true;
-        physicsComponent.AddForce(Vector3.up * jumpForce * speedScalar, ForceMode.Impulse);
-        //physicsComponent.AddForce(-transform.forward * jumpForce * 2/3 * speedScalar, ForceMode.Impulse);
+        physicsComponent.AddForce(Vector3.up * jumpForce * speedScalar, ForceMode.Force);
+        //physicsComponent.AddForce(-transform.forward * jumpForce * 2/3 * speedScalar, ForceMode.Force);
         yield return new WaitForSeconds(.15f);
-        //physicsComponent.AddForce(-transform.forward * jumpForce * 2/3 * speedScalar, ForceMode.Impulse);
+        //physicsComponent.AddForce(-transform.forward * jumpForce * 2/3 * speedScalar, ForceMode.Force);
         pauseWallRaycast = false;
     }
 
@@ -83,11 +83,11 @@ public class TranslateMovement : NetworkBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             jumpSound.Play();
-            physicsComponent.AddForce(Vector3.up * jumpForce * speedScalar, ForceMode.Impulse);
+            physicsComponent.AddForce(Vector3.up * jumpForce * speedScalar, ForceMode.Force);
         }
         else if (Input.GetButtonUp("Jump") && nearWall == false)
         {
-            physicsComponent.AddForce(Vector3.down * (jumpForce / 3) * speedScalar, ForceMode.Impulse);
+            physicsComponent.AddForce(Vector3.down * (jumpForce / 4) * speedScalar, ForceMode.Force);
         }
 
         // increase fall speed
@@ -105,7 +105,7 @@ public class TranslateMovement : NetworkBehaviour
         {
             dashSound.Play();
             physicsComponent.AddForce(new Vector3(physicsComponent.velocity.x * dashForce * speedScalar, 
-                0f, physicsComponent.velocity.z * dashForce * speedScalar), ForceMode.Impulse);
+                0f, physicsComponent.velocity.z * dashForce * speedScalar), ForceMode.Force);
             dashCooldown = dashTimeout;
             physicsComponent.velocity = new Vector3(0f, 0f, 0f);
         }
@@ -117,21 +117,21 @@ public class TranslateMovement : NetworkBehaviour
         // x axis
         if (Input.GetAxis("Horizontal") > 0)
         {
-            physicsComponent.AddForce(Vector3.right * moveSpeed * speedScalar * Time.deltaTime, ForceMode.Impulse);
+            physicsComponent.AddForce(Vector3.right * moveSpeed * speedScalar * Time.deltaTime, ForceMode.Force);
         }
         else if (Input.GetAxis("Horizontal") < 0)
         {
-            physicsComponent.AddForce(Vector3.left * moveSpeed * speedScalar * Time.deltaTime, ForceMode.Impulse);
+            physicsComponent.AddForce(Vector3.left * moveSpeed * speedScalar * Time.deltaTime, ForceMode.Force);
         }
 
         // z axis
         if (Input.GetAxis("Vertical") > 0)
         {
-            physicsComponent.AddForce(Vector3.forward * moveSpeed * speedScalar * Time.deltaTime, ForceMode.Impulse);
+            physicsComponent.AddForce(Vector3.forward * moveSpeed * speedScalar * Time.deltaTime, ForceMode.Force);
         }
         else if (Input.GetAxis("Vertical") < 0)
         {
-            physicsComponent.AddForce(Vector3.back * moveSpeed * speedScalar * Time.deltaTime, ForceMode.Impulse);
+            physicsComponent.AddForce(Vector3.back * moveSpeed * speedScalar * Time.deltaTime, ForceMode.Force);
         }
 
         // rotate player in movement direction

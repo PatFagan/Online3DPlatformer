@@ -264,14 +264,14 @@ MonoBehaviour:
   syncInterval: 0.1
   moveSpeed: 50
   rotLerp: 100
-  speedScalar: 3
+  speedScalar: 200
   defaultSpeedScalar: 3
   physicsComponent: {fileID: 4816001874785013886}
   jumpForce: 30
   dashForce: 6
   dashTimeout: 40
-  wallClimbDistance: 2
-  extraGravity: 0.12
+  wallClimbDistance: 1
+  extraGravity: 0.9
   jumpSound: {fileID: 4816001874785013873}
   dashSound: {fileID: 4816001874785013872}
 --- !u!114 &9008163673965953405
