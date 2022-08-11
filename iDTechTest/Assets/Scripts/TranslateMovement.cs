@@ -21,6 +21,12 @@ public class TranslateMovement : NetworkBehaviour
     Vector3 wallDetectionDirection = Vector3.forward;
     bool pauseWallRaycast = false;
 
+    // sword
+    public GameObject sword;
+    public float swordCooldownTime;
+    float swordCooldownTimer;
+
+    // sounds
     public AudioSource jumpSound;
     public AudioSource dashSound;
 
@@ -44,6 +50,8 @@ public class TranslateMovement : NetworkBehaviour
             Dash();
 
             WallClimb();
+
+            SwordSlash();
         }
     }
 
@@ -92,7 +100,7 @@ public class TranslateMovement : NetworkBehaviour
         }
         else if (Input.GetButtonUp("Jump") && nearWall == false)
         {
-            physicsComponent.AddForce(Vector3.down * (jumpForce / 4) * speedScalar, ForceMode.Force);
+            physicsComponent.AddForce(Vector3.down * (jumpForce / 5) * speedScalar, ForceMode.Force);
         }
     }
 
@@ -148,6 +156,17 @@ public class TranslateMovement : NetworkBehaviour
             transform.rotation = Quaternion.Slerp(gameObject.transform.rotation,
                 Quaternion.LookRotation(new Vector3(physicsComponent.velocity.x, 0f, physicsComponent.velocity.z)), Time.deltaTime * rotLerp);
         }
+    }
+
+    void SwordSlash()
+    {
+        if (Input.GetButtonDown("Shoot") && swordCooldownTimer < 0f)
+        {
+            GameObject nextSpawn = Instantiate(sword, transform.position, sword.transform.rotation);
+            NetworkServer.Spawn(nextSpawn);
+            swordCooldownTimer = swordCooldownTime;
+        }
+        swordCooldownTimer -= Time.deltaTime;
     }
 
     public override void OnStartLocalPlayer()

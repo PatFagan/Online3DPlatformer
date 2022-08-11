@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 3435348672564505165}
   - component: {fileID: 8456931173995086901}
   - component: {fileID: 3243528042092883947}
+  - component: {fileID: -1312876852071045945}
   m_Layer: 0
   m_Name: LootEnemy
   m_TagString: Enemy
@@ -104,6 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08a3689669df48241b4f526e239f6fd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mesh: {fileID: 0}
 --- !u!114 &-7881925443620043347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,6 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cd2814e599998444ac898e5244bc491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   ai: {fileID: 3435348672564505165}
 --- !u!114 &3741457823097739776
 MonoBehaviour:
@@ -219,7 +223,7 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 36f991b0c0498704385976dfe9c83976
+  m_AssetId: 2ff687c23b793fa43b00ff0f54d49b19
   hasSpawned: 0
 --- !u!114 &3243528042092883947
 MonoBehaviour:
@@ -255,3 +259,19 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+--- !u!54 &-1312876852071045945
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3435348672564505206}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 3
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
