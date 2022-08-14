@@ -7,6 +7,7 @@ public class TranslateMovement : NetworkBehaviour
 {
     // movement variables
     public float moveSpeed = 50f, rotLerp = 100f;
+    float swordMoveSpeed, defaultMoveSpeed;
     public float speedScalar = 200f, defaultSpeedScalar = 200f;
     public Rigidbody physicsComponent;
 
@@ -36,6 +37,10 @@ public class TranslateMovement : NetworkBehaviour
         physicsComponent = gameObject.GetComponent<Rigidbody>();
         distToGround = GetComponent<Collider>().bounds.extents.y;
         gameObject.name = "Player";
+
+        // set sword move speed variables
+        swordMoveSpeed = moveSpeed / 2f;
+        defaultMoveSpeed = moveSpeed; 
     }
 
     // runs once per frame
@@ -165,8 +170,17 @@ public class TranslateMovement : NetworkBehaviour
             GameObject nextSpawn = Instantiate(sword, transform.position, sword.transform.rotation);
             NetworkServer.Spawn(nextSpawn);
             swordCooldownTimer = swordCooldownTime;
+            StartCoroutine(SwordSlowSpeed());
         }
         swordCooldownTimer -= Time.deltaTime;
+    }
+
+    IEnumerator SwordSlowSpeed()
+    {
+        moveSpeed = swordMoveSpeed;
+        yield return new WaitUntil(() => swordCooldownTimer < 0f);
+        print("fast");
+        moveSpeed = defaultMoveSpeed;
     }
 
     public override void OnStartLocalPlayer()

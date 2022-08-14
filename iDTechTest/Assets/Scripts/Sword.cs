@@ -12,7 +12,6 @@ public class Sword : MonoBehaviour
         animator = gameObject.transform.parent.GetComponent<Animator>();
 
         int rand = Random.Range(0, 2);
-        print(rand);
         if (rand == 1)
         {
             animator.SetBool("sword2", true);
