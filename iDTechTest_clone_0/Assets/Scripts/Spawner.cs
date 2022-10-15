@@ -13,6 +13,12 @@ public class Spawner : NetworkBehaviour
     bool spawningInProgress = false;
     bool spawnTriggered = false;
 
+    LineRenderer line;
+    void Start()
+    {
+        line = gameObject.GetComponent<LineRenderer>();
+    }
+
     // start spawning
     IEnumerator Spawn()
     {
@@ -34,6 +40,19 @@ public class Spawner : NetworkBehaviour
         if (spawningInProgress == false && spawnTriggered == true)
         {
             StartCoroutine(Spawn());
+            line.enabled = false;
+        }
+
+        if (!spawningInProgress)
+        {
+            line.enabled = true;
+            GameObject player = GameObject.FindGameObjectWithTag("LocalPlayer");
+
+            if (player)
+            {
+                line.SetPosition(0, transform.position);
+                line.SetPosition(1, player.transform.position);
+            }
         }
     }
 

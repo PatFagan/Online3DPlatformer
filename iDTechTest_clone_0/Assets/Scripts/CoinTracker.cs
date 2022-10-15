@@ -14,8 +14,10 @@ public class CoinTracker : NetworkBehaviour
     public int coinsCollected = 0; // creates the coin score
     int coinMax = 10;
 
+    PlayerHealth playerHealth;
     void Start()
     {
+        playerHealth = GetComponent<PlayerHealth>();
         coinUI.fillAmount = 0f;
     }
 
@@ -40,6 +42,7 @@ public class CoinTracker : NetworkBehaviour
         if (collider.gameObject.tag == "Coin" && coinsCollected < coinMax && isLocalPlayer)
         {
             coinsCollected++; // add to the coin score
+            playerHealth.health++;
             NetworkServer.Destroy(collider.gameObject); // destroy the coin
         }
     }

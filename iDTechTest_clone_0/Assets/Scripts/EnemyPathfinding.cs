@@ -13,23 +13,39 @@ public class EnemyPathfinding : NetworkBehaviour
     {
         player1 = GameObject.FindGameObjectWithTag("LocalPlayer"); // find the player
         player2 = GameObject.FindGameObjectWithTag("Player"); // find the player
-        currentTarget = player1;
 
+        int rand = Random.Range(0,2);
+        print(rand);
+
+        // choose to chase player 1 or player 2
+        switch (rand) 
+        {
+            case 0:
+                if (player2)
+                    currentTarget = player2;
+                else
+                    currentTarget = player1;
+                break;
+            default:
+                currentTarget = player1;
+                break;
+        }
+
+        /*
         if (player2)
             StartCoroutine(TargetSwap());
+        */
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        player1 = GameObject.FindGameObjectWithTag("LocalPlayer"); // find the player
-        player2 = GameObject.FindGameObjectWithTag("Player"); // find the player
-
-        if (!player2)
-            currentTarget = player1;
-
-        if (player1 || player2)
+        /*
+        if (currentTarget)
             ai.SetDestination(currentTarget.transform.position); // set the ai to chase the player
+        */
+
+        ai.SetDestination(player1.transform.position); // set the ai to chase the player
     }
 
     IEnumerator TargetSwap()
