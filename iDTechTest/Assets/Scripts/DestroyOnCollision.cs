@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 
-public class DestroyOnCollision : NetworkBehaviour
+public class DestroyOnCollision : MonoBehaviour
 {
     public string destroyTag;
 
@@ -12,7 +11,7 @@ public class DestroyOnCollision : NetworkBehaviour
     {
         if (collider.gameObject.tag == destroyTag)
         {
-            NetworkServer.Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 }

@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 
-public class Spawner : NetworkBehaviour
+public class Spawner : MonoBehaviour
 {
     public GameObject[] spawnedObjectArray;
     public float xMin, xMax, zMin, zMax;
-
-    int numberOfSpawnedObjects = 0;
 
     bool spawningInProgress = false;
     bool spawnTriggered = false;
@@ -28,8 +25,7 @@ public class Spawner : NetworkBehaviour
         for (int index = 0; index < spawnedObjectArray.Length; index++)
         {
             yield return new WaitForSeconds(.5f);
-            GameObject nextSpawn = Instantiate(spawnedObjectArray[index], new Vector3(Random.Range(xMin, xMax), Random.Range(0, 0), Random.Range(zMin, zMax)), spawnedObjectArray[index].transform.rotation);
-            NetworkServer.Spawn(nextSpawn);
+            Instantiate(spawnedObjectArray[index]);
         }
         spawningInProgress = false;
     }
@@ -46,7 +42,7 @@ public class Spawner : NetworkBehaviour
         if (!spawningInProgress)
         {
             line.enabled = true;
-            GameObject player = GameObject.FindGameObjectWithTag("LocalPlayer");
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
 
             if (player)
             {

@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 
-public class PlayerProjectile : NetworkBehaviour
+public class PlayerProjectile : MonoBehaviour
 {
     Transform playerTransform;
 
@@ -33,14 +32,14 @@ public class PlayerProjectile : NetworkBehaviour
         if (collider.gameObject.tag == "Ground")
         {
             GameObject nextSpawn = Instantiate(firePuddle, transform.position, Quaternion.identity);
-            NetworkServer.Spawn(nextSpawn);
-            NetworkServer.Destroy(gameObject);
+            Instantiate(nextSpawn);
+            Destroy(gameObject);
         }
     }
 
     IEnumerator DestroyAfterTime()
     {
         yield return new WaitForSeconds(lifetime);
-        NetworkServer.Destroy(gameObject);
+        Destroy(gameObject);
     }
 }

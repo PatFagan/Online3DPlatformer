@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Mirror;
 
-public class HealthManager : NetworkBehaviour
+public class HealthManager : MonoBehaviour
 {
     public int health, maxHealth;
     public string[] damageTag = { "tag", "tag", "tag", "tag" };
@@ -41,7 +40,7 @@ public class HealthManager : NetworkBehaviour
     IEnumerator Die()
     {
         yield return new WaitForSeconds(.1f);
-        NetworkServer.Destroy(gameObject);
+        Destroy(gameObject);
     }
 
     void OnTriggerEnter(Collider collider)

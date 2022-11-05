@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Mirror;
 
-public class PlayerHealth : NetworkBehaviour
+public class PlayerHealth : MonoBehaviour
 {
     public int health, maxHealth;
     public string[] damageTag = { "tag", "tag", "tag", "tag" };
@@ -22,10 +21,7 @@ public class PlayerHealth : NetworkBehaviour
     {
         playerMovementScript = GetComponent<TranslateMovement>();
 
-        if (!isLocalPlayer)
-        {
-            healthBar.fillAmount = 0f;
-        }
+        healthBar.fillAmount = 0f;
     }
 
     // Update is called once per frame
@@ -34,8 +30,7 @@ public class PlayerHealth : NetworkBehaviour
         immunityTimer -= Time.deltaTime;
         // print(immunityTimer);
 
-        if (isLocalPlayer)
-            HealthCheck();
+        HealthCheck();
     }
 
     void HealthCheck()
@@ -59,23 +54,19 @@ public class PlayerHealth : NetworkBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        if (isLocalPlayer)
+        if (immunityTimer < 0)
         {
-            if (immunityTimer < 0)
+            for (int index = 0; index < damageTag.Length; index++)
             {
-                for (int index = 0; index < damageTag.Length; index++)
+                if (collider.gameObject.tag == damageTag[index])
                 {
-                    if (collider.gameObject.tag == damageTag[index])
-                    {
-                        // take off health
-                        health--;
+                    // take off health
+                    health--;
 
-                        // reset our immunity timer
-                        immunityTimer = 1f;
-                    }
+                    // reset our immunity timer
+                    immunityTimer = 1f;
                 }
             }
-        } 
-
+        }
     }
 }
