@@ -3400,7 +3400,7 @@ MonoBehaviour:
   dashForce: 3
   dashTimeout: 40
   wallClimbDistance: 1
-  extraGravity: 0.05
+  extraGravity: 0.005
   sword: {fileID: 8243267402985211647, guid: 0341b1d97e1f590478fb7be1358481b4, type: 3}
   swordCooldownTime: 0.5
   jumpSound: {fileID: 4994679103260337668}

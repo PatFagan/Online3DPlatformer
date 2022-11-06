@@ -17,8 +17,6 @@ GameObject:
   - component: {fileID: 3435348672564505161}
   - component: {fileID: 3435348672564505167}
   - component: {fileID: 3435348672564505165}
-  - component: {fileID: 8456931173995086901}
-  - component: {fileID: 3243528042092883947}
   - component: {fileID: 871357768759031576}
   m_Layer: 0
   m_Name: Enemy
@@ -117,8 +115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb1b3fcccdd13fb49927c6d073fb34e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   health: 3
   maxHealth: 3
   damageTag:
@@ -137,8 +133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cd2814e599998444ac898e5244bc491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   ai: {fileID: 3435348672564505165}
 --- !u!136 &3435348672564505161
 CapsuleCollider:
@@ -190,57 +184,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &8456931173995086901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3435348672564505206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 36f991b0c0498704385976dfe9c83976
-  hasSpawned: 0
---- !u!114 &3243528042092883947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3435348672564505206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  clientAuthority: 1
-  sendInterval: 0.05
-  syncPosition: 1
-  syncRotation: 1
-  syncScale: 0
-  interpolatePosition: 1
-  interpolateRotation: 1
-  interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
-  bufferResetMultiplier: 5
-  positionSensitivity: 0.01
-  rotationSensitivity: 0.01
-  scaleSensitivity: 0.01
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!54 &871357768759031576
 Rigidbody:
   m_ObjectHideFlags: 0

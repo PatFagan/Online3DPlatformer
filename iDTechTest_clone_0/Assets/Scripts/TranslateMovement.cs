@@ -160,8 +160,7 @@ public class TranslateMovement : MonoBehaviour
     {
         if (Input.GetButtonDown("Shoot") && swordCooldownTimer < 0f)
         {
-            GameObject nextSpawn = Instantiate(sword, transform.position, sword.transform.rotation);
-            Instantiate(nextSpawn);
+            Instantiate(sword, transform.position, sword.transform.rotation);
             swordCooldownTimer = swordCooldownTime;
             StartCoroutine(SwordSlowSpeed());
         }
@@ -171,7 +170,7 @@ public class TranslateMovement : MonoBehaviour
     IEnumerator SwordSlowSpeed()
     {
         moveSpeed = swordMoveSpeed;
-        yield return new WaitUntil(() => swordCooldownTimer < 0f);
+        yield return new WaitUntil(() => swordCooldownTimer < .1f);
         moveSpeed = defaultMoveSpeed;
     }
 }
