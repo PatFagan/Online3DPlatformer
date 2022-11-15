@@ -15,6 +15,7 @@ public class TranslateMovement : MonoBehaviour
     float distToGround, dashCooldown = 0f;
     public float jumpForce = 2300f, dashForce = 800f, dashTimeout = 40f;
     public float wallClimbDistance = 2f, extraGravity;
+    int jumpToken = 1;
 
     // wall jump variables
     bool nearWall = false;
@@ -56,6 +57,38 @@ public class TranslateMovement : MonoBehaviour
         SwordSlash();
         
         FallSpeed();
+
+        GroundPound();
+
+        DoubleJump();
+    }
+
+    void GroundPound()
+    {
+        if (Input.GetButtonDown("GroundPound") && !isGrounded)
+        {
+            dashSound.Play();
+            physicsComponent.AddForce(new Vector3(0f, -jumpForce*3 * speedScalar, 
+                0f), ForceMode.Force);
+        }
+    }
+
+    void DoubleJump()
+    {
+        // double jump if off the ground/walls and you have a jump token
+        if (Input.GetButtonDown("Jump") && !isGrounded && jumpToken > 0 && !nearWall)
+        {
+            dashSound.Play();
+            physicsComponent.AddForce(new Vector3(0f, jumpForce * speedScalar, 
+                0f), ForceMode.Force);
+            jumpToken--;
+        }
+
+        // if grounded, gain your double jump back
+        if (isGrounded)
+        {
+            jumpToken = 1;
+        }
     }
 
     void WallClimb()
@@ -63,8 +96,6 @@ public class TranslateMovement : MonoBehaviour
         if (!pauseWallRaycast)
             wallDetectionDirection = transform.forward;
 
-        //print(wallDetectionDirection);
-        //print(nearWall);
         nearWall = Physics.Raycast(transform.position, wallDetectionDirection, wallClimbDistance);
 
         // wall climb
@@ -107,7 +138,7 @@ public class TranslateMovement : MonoBehaviour
         // increase fall speed
         if (physicsComponent.velocity.y < -0.1 && dashCooldown <= dashTimeout * 3/4 && !isGrounded)
         {
-            physicsComponent.velocity += Vector3.up * Physics.gravity.y * extraGravity;
+            physicsComponent.velocity += Vector3.up * extraGravity;
         }
     }
 
@@ -121,7 +152,7 @@ public class TranslateMovement : MonoBehaviour
             physicsComponent.AddForce(new Vector3(physicsComponent.velocity.x * dashForce * speedScalar, 
                 0f, physicsComponent.velocity.z * dashForce * speedScalar), ForceMode.Force);
             dashCooldown = dashTimeout;
-            physicsComponent.velocity = new Vector3(0f, 0f, 0f);
+            //physicsComponent.velocity = new Vector3(0f, 0f, 0f);
         }
     }
 
