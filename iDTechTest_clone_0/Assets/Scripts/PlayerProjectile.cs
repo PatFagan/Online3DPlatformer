@@ -14,7 +14,7 @@ public class PlayerProjectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerTransform = GameObject.FindGameObjectWithTag("LocalPlayer").GetComponent<Transform>();
+        playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         rigidbody.AddForce(projectileSpeed * Vector3.up);
         rigidbody.AddForce(projectileSpeed * playerTransform.forward);
         StartCoroutine(DestroyAfterTime());

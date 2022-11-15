@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 6074739740281616388}
   - component: {fileID: 6074739740281616389}
   - component: {fileID: 8222023005667788052}
-  - component: {fileID: 4134498642245268321}
   m_Layer: 0
   m_Name: Fireball
   m_TagString: PlayerProjectile
@@ -112,8 +111,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89d35860ef1e7b7419649bf4b1f1d860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   projectileSpeed: 3000
   lifetime: 10
   firePuddle: {fileID: 6074739740281616390, guid: 2f2738c3f58906744bc9e488c03a4317, type: 3}
@@ -134,20 +131,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4134498642245268321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6074739740281616390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 63ac729b8056be54ba5b7f6db309265e
-  hasSpawned: 0
