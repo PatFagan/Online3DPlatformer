@@ -918,6 +918,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9119212975349245622, guid: 7bcfbabbf013c8a4a822379320d0a257, type: 3}
   m_PrefabInstance: {fileID: 9119212974752667502}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &779528964 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2646965345680574569, guid: 44688d572a44c8747ac23491b526e65e, type: 3}
+  m_PrefabInstance: {fileID: 3483494117762649438}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &794105461 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3918204034549303931, guid: 79126ecf6cf8775429b6874ee836c3d8, type: 3}
@@ -940,7 +945,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3918204034549303931, guid: 79126ecf6cf8775429b6874ee836c3d8, type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 3918204034549303931, guid: 79126ecf6cf8775429b6874ee836c3d8, type: 3}
       propertyPath: m_LocalScale.y
@@ -1610,7 +1615,6 @@ GameObject:
   - component: {fileID: 1556021244}
   - component: {fileID: 1556021243}
   - component: {fileID: 1556021245}
-  - component: {fileID: 1556021246}
   m_Layer: 0
   m_Name: CM vcam3
   m_TagString: Untagged
@@ -1682,18 +1686,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d92d2fd7b85af8a4691f78402e2e65bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1556021246
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1556021242}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1618314654
@@ -2052,6 +2044,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2646965345680574484, guid: 44688d572a44c8747ac23491b526e65e, type: 3}
   m_PrefabInstance: {fileID: 3483494117762649438}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1820132726
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779528964}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 50.000004, y: 0, z: 50}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1827851732
 GameObject:
   m_ObjectHideFlags: 0
@@ -2143,10 +2148,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1827851732}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.3, y: 0, z: 0}
+  m_LocalPosition: {x: 0.3, y: -0.5, z: 0}
   m_LocalScale: {x: 50, y: 1, z: 50}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1820132723}
   m_Father: {fileID: 1944230070}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2363,7 +2369,6 @@ Transform:
   - {fileID: 97974127}
   - {fileID: 9707133}
   - {fileID: 1337391648}
-  - {fileID: 1820132723}
   - {fileID: 731780921}
   m_Father: {fileID: 0}
   m_RootOrder: 9
@@ -3000,15 +3005,23 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1944230070}
+    m_TransformParent: {fileID: 1827851736}
     m_Modifications:
     - target: {fileID: 2646965345680574484, guid: 44688d572a44c8747ac23491b526e65e, type: 3}
       propertyPath: m_RootOrder
-      value: 17
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2646965345680574484, guid: 44688d572a44c8747ac23491b526e65e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.099999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 2646965345680574484, guid: 44688d572a44c8747ac23491b526e65e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.099999994
       objectReference: {fileID: 0}
     - target: {fileID: 2646965345680574484, guid: 44688d572a44c8747ac23491b526e65e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.188621
+      value: -0.10977242
       objectReference: {fileID: 0}
     - target: {fileID: 2646965345680574484, guid: 44688d572a44c8747ac23491b526e65e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3016,7 +3029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2646965345680574484, guid: 44688d572a44c8747ac23491b526e65e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.899107
+      value: 0.117982134
       objectReference: {fileID: 0}
     - target: {fileID: 2646965345680574484, guid: 44688d572a44c8747ac23491b526e65e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3053,6 +3066,10 @@ PrefabInstance:
     - target: {fileID: 2646965345680574569, guid: 44688d572a44c8747ac23491b526e65e, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2646965345680574569, guid: 44688d572a44c8747ac23491b526e65e, type: 3}
+      propertyPath: m_TagString
+      value: Lava
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44688d572a44c8747ac23491b526e65e, type: 3}
@@ -3457,7 +3474,6 @@ GameObject:
   - component: {fileID: 4994679103260337664}
   - component: {fileID: 4994679103260337676}
   - component: {fileID: 8828787260131030792}
-  - component: {fileID: 6451808327489173393}
   - component: {fileID: 5322823839562073701}
   - component: {fileID: 4994679103260337670}
   - component: {fileID: 4994679103260337679}
@@ -3944,18 +3960,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &6451808327489173393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4994679103260337674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ed74364b4ac46f48bf22eabc4c74e13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &6518202968483373458
 Transform:
   m_ObjectHideFlags: 0
@@ -4743,6 +4747,8 @@ MonoBehaviour:
   maxHealth: 3
   damageTag:
   - Enemy
+  dotDamageTag:
+  - Lava
   healthBar: {fileID: 7140152828010931625}
 --- !u!1 &8967904136854590953
 GameObject:

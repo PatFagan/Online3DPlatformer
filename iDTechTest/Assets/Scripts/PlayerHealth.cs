@@ -6,8 +6,10 @@ using TMPro;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int health, maxHealth;
+    public float health, maxHealth;
     public string[] damageTag = { "tag", "tag", "tag", "tag" };
+    public string[] dotDamageTag = { "tag", "tag", "tag", "tag" };
+    bool checkDot = false;
 
     float immunityTimer = 0f;
 
@@ -67,6 +69,40 @@ public class PlayerHealth : MonoBehaviour
                     immunityTimer = 1f;
                 }
             }
+
+            for (int index = 0; index < dotDamageTag.Length; index++)
+            {
+                if (collider.gameObject.tag == dotDamageTag[index])
+                {
+                    checkDot = true;
+                    StartCoroutine(DamageOverTime());
+                }
+            }
         }
+    }
+
+    void OnTriggerExit(Collider collider)
+    {
+        for (int index = 0; index < dotDamageTag.Length; index++)
+        {
+            if (collider.gameObject.tag == dotDamageTag[index])
+            {
+                checkDot = false;
+            }
+        }
+    }
+
+    IEnumerator DamageOverTime()
+    {
+        // take off health
+        health -= .25f;
+
+        // reset our immunity timer
+        immunityTimer = 1f;
+
+        yield return new WaitForSeconds(immunityTimer);
+
+        if (checkDot)
+            StartCoroutine(DamageOverTime());
     }
 }

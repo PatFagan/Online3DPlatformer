@@ -33,7 +33,10 @@ public class CoinTracker : MonoBehaviour
         if (collider.gameObject.tag == "Coin" && coinsCollected < coinMax)
         {
             coinsCollected++; // add to the coin score
-            playerHealth.health++;
+
+            if (playerHealth.health < playerHealth.maxHealth)
+                playerHealth.health++;
+                
             Destroy(collider.gameObject); // destroy the coin
         }
     }

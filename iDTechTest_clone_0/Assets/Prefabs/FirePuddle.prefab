@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6074739740281616387}
   - component: {fileID: 6028207148266112455}
   - component: {fileID: 8222023005667788052}
-  - component: {fileID: 4134498642245268321}
   - component: {fileID: 2799436656675452651}
   - component: {fileID: 5444051146504353277}
   m_Layer: 0
@@ -100,8 +99,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2a6c9d2c11975a44962c1565075f1d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   lifetime: 4
 --- !u!54 &8222023005667788052
 Rigidbody:
@@ -119,23 +116,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4134498642245268321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6074739740281616390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 2f2738c3f58906744bc9e488c03a4317
-  hasSpawned: 0
 --- !u!64 &2799436656675452651
 MeshCollider:
   m_ObjectHideFlags: 0
