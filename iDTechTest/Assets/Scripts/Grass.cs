@@ -40,10 +40,10 @@ public class Grass : MonoBehaviour
 
     IEnumerator MoveGrass(Vector3 grassMov)
     {   
-        print(gelatinVertices.Length);
         vertexArray = OriginalMesh.vertices; // set the vertex array to the original mesh, to be edited
         for (int i = 0; i < gelatinVertices.Length; i++) // loop through all vertices in the mesh
         {
+            print(i);
             Vector3 target = transform.TransformPoint(vertexArray[i]);
             target += grassMov; // get current vertex pos in world space
             gelatinVertices[i].Jiggle(target, stiffness, damping); // jiggle the current vertex
@@ -51,7 +51,8 @@ public class Grass : MonoBehaviour
             // set new vertex positions to the array
             vertexArray[gelatinVertices[i].ID] = Vector3.Lerp(vertexArray[gelatinVertices[i].ID], target, intensity);
             
-            yield return new WaitForSeconds(.03f);
+            float randTime = Random.Range(0, .01f);
+            yield return new WaitForSeconds(.03f + randTime);
             
             MeshClone.vertices = vertexArray;
         }
@@ -64,8 +65,8 @@ public class Grass : MonoBehaviour
             // set new vertex positions to the array
             vertexArray[gelatinVertices[i].ID] = Vector3.Lerp(vertexArray[gelatinVertices[i].ID], target, intensity);
             
-            //if (i%10 == 0)
-            yield return new WaitForSeconds(.03f);
+            float randTime = Random.Range(0, .01f);
+            yield return new WaitForSeconds(.03f + randTime);
 
             MeshClone.vertices = vertexArray;
         }
