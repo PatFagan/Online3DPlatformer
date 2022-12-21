@@ -136,9 +136,9 @@ public class TranslateMovement : MonoBehaviour
     void FallSpeed()
     {
         // increase fall speed
-        if (physicsComponent.velocity.y < -0.1 && dashCooldown <= dashTimeout * 3/4 && !isGrounded)
+        if (dashCooldown <= dashTimeout * 3/4 && !isGrounded) // physicsComponent.velocity.y < -0.1 && 
         {
-            physicsComponent.velocity += Vector3.up * extraGravity;
+            physicsComponent.velocity -= Vector3.up * extraGravity;
         }
     }
 

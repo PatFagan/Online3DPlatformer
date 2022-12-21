@@ -5,15 +5,19 @@ using UnityEngine;
 // sources
 // UnityCity: https://www.youtube.com/watch?v=Kwh4TkQqqf8&t=33s 
 
-public class Grass : MonoBehaviour
+public class Water : MonoBehaviour
 {
     public float stiffness = 1f; // magnitude of vector between old and new vector positions
     public float damping = 0.75f; // if < 1, velocity decreases at that rate
     public float intensity = 1f; // speed of lerp between jiggles
 
+    public float xOffset, yOffset, zOffset;
+
     private Mesh OriginalMesh, MeshClone;
-    private GrassVertex[] gelatinVertices;
+    private WaterVertex[] gelatinVertices;
     private Vector3[] vertexArray;
+
+    public float timeBetweenVertices;
 
     //TranslateMovement movementScript;
 
@@ -27,46 +31,46 @@ public class Grass : MonoBehaviour
         GetComponent<MeshFilter>().sharedMesh = MeshClone;
 
         // get list of mesh vertices
-        gelatinVertices = new GrassVertex[MeshClone.vertices.Length];
+        gelatinVertices = new WaterVertex[MeshClone.vertices.Length];
 
         // create each vertex with an id and position
         for (int i = 0; i < MeshClone.vertices.Length; i++)
         {
-            gelatinVertices[i] = new GrassVertex(i, transform.TransformPoint(MeshClone.vertices[i]));
+            gelatinVertices[i] = new WaterVertex(i, transform.TransformPoint(MeshClone.vertices[i]));
         }
 
-        StartCoroutine(MoveGrass(Vector3.zero));
+        Vector3 waterMov = new Vector3(xOffset, yOffset, zOffset);
+        StartCoroutine(MoveWater(waterMov));
     }
 
-    IEnumerator MoveGrass(Vector3 grassMov)
+    IEnumerator MoveWater(Vector3 waterMov)
     {   
         vertexArray = OriginalMesh.vertices; // set the vertex array to the original mesh, to be edited
         for (int i = 0; i < gelatinVertices.Length; i++) // loop through all vertices in the mesh
         {
-            print(i);
             Vector3 target = transform.TransformPoint(vertexArray[i]);
-            target += grassMov; // get current vertex pos in world space
+            target += waterMov; // get current vertex pos in world space
             gelatinVertices[i].Jiggle(target, stiffness, damping); // jiggle the current vertex
             target = transform.InverseTransformPoint(gelatinVertices[i].position); // get pos of new vertex
             // set new vertex positions to the array
             vertexArray[gelatinVertices[i].ID] = Vector3.Lerp(vertexArray[gelatinVertices[i].ID], target, intensity);
             
             float randTime = Random.Range(0, .01f);
-            yield return new WaitForSeconds(.03f + randTime);
+            yield return new WaitForSeconds(timeBetweenVertices + randTime);
             
             MeshClone.vertices = vertexArray;
         }
         for (int i = 0; i < gelatinVertices.Length; i++) // loop through all vertices in the mesh
         {
             Vector3 target = transform.TransformPoint(vertexArray[i]);
-            target -= grassMov; // get current vertex pos in world space
+            target -= waterMov; // get current vertex pos in world space
             gelatinVertices[i].Jiggle(target, stiffness, damping); // jiggle the current vertex
             target = transform.InverseTransformPoint(gelatinVertices[i].position); // get pos of new vertex
             // set new vertex positions to the array
             vertexArray[gelatinVertices[i].ID] = Vector3.Lerp(vertexArray[gelatinVertices[i].ID], target, intensity);
             
             float randTime = Random.Range(0, .01f);
-            yield return new WaitForSeconds(.03f + randTime);
+            yield return new WaitForSeconds(timeBetweenVertices + randTime);
 
             MeshClone.vertices = vertexArray;
         }
@@ -74,18 +78,17 @@ public class Grass : MonoBehaviour
 
         //yield return new WaitForSeconds(.5f);
         
-        grassMov = new Vector3(0, 0, .1f);
-        StartCoroutine(MoveGrass(grassMov));
+        StartCoroutine(MoveWater(waterMov));
     }
 
-    public class GrassVertex
+    public class WaterVertex
     {
         public int ID;
         public Vector3 position;
         Vector3 velocity;
 
         // gelatin vertex constructor
-        public GrassVertex(int customId, Vector3 customPos)
+        public WaterVertex(int customId, Vector3 customPos)
         {
             ID = customId;
             position = customPos;
