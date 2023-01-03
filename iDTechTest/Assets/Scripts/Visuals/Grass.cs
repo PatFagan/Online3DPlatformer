@@ -45,31 +45,32 @@ public class Grass : MonoBehaviour
 
     IEnumerator MoveGrass(Vector3 grassMov)
     {   
+        float randMove = Random.Range(1, 1.05f);
         vertexArray = OriginalMesh.vertices; // set the vertex array to the original mesh, to be edited
-        for (int i = 0; i < gelatinVertices.Length; i++) // loop through all vertices in the mesh
+        for (int i = 4; i < gelatinVertices.Length; i++) // loop through all vertices in the mesh
         {
             Vector3 target = transform.TransformPoint(vertexArray[i]);
-            target += grassMov * (i); // get current vertex pos in world space
+            target += grassMov * (randMove); // get current vertex pos in world space
             gelatinVertices[i].Jiggle(target, stiffness, damping); // jiggle the current vertex
             target = transform.InverseTransformPoint(gelatinVertices[i].position); // get pos of new vertex
             // set new vertex positions to the array
             vertexArray[gelatinVertices[i].ID] = Vector3.Lerp(vertexArray[gelatinVertices[i].ID], target, intensity);
             
-            float randTime = Random.Range(0, .01f);
+            float randTime = Random.Range(0, .05f);
             yield return new WaitForSeconds(timeBetweenVertices + randTime);
             
             MeshClone.vertices = vertexArray;
         }
-        for (int i = 0; i < gelatinVertices.Length; i++) // loop through all vertices in the mesh
+        for (int i = 4; i < gelatinVertices.Length; i++) // loop through all vertices in the mesh
         {
             Vector3 target = transform.TransformPoint(vertexArray[i]);
-            target -= grassMov * (i); // get current vertex pos in world space
+            target -= grassMov * (randMove); // get current vertex pos in world space
             gelatinVertices[i].Jiggle(target, stiffness, damping); // jiggle the current vertex
             target = transform.InverseTransformPoint(gelatinVertices[i].position); // get pos of new vertex
             // set new vertex positions to the array
             vertexArray[gelatinVertices[i].ID] = Vector3.Lerp(vertexArray[gelatinVertices[i].ID], target, intensity);
             
-            float randTime = Random.Range(0, .01f);
+            float randTime = Random.Range(0, .05f);
             yield return new WaitForSeconds(timeBetweenVertices + randTime);
 
             MeshClone.vertices = vertexArray;
