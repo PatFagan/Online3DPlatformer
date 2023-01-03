@@ -3066,6 +3066,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4860573828649506480, guid: 80e76ba9424f8a143ba53f86c4a6cc17, type: 3}
+      propertyPath: yOffset
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860573828649506480, guid: 80e76ba9424f8a143ba53f86c4a6cc17, type: 3}
+      propertyPath: intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860573828649506480, guid: 80e76ba9424f8a143ba53f86c4a6cc17, type: 3}
+      propertyPath: timeBetweenVertices
+      value: 0.003
+      objectReference: {fileID: 0}
     - target: {fileID: 4860573828649506483, guid: 80e76ba9424f8a143ba53f86c4a6cc17, type: 3}
       propertyPath: m_RootOrder
       value: 3

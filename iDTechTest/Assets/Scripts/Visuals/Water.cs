@@ -55,10 +55,10 @@ public class Water : MonoBehaviour
             // set new vertex positions to the array
             vertexArray[gelatinVertices[i].ID] = Vector3.Lerp(vertexArray[gelatinVertices[i].ID], target, intensity);
             
-            float randTime = Random.Range(0, .01f);
-            yield return new WaitForSeconds(timeBetweenVertices + randTime);
-            
             MeshClone.vertices = vertexArray;
+            float randTime = Random.Range(0, .01f);
+
+            yield return new WaitForSeconds(timeBetweenVertices + randTime);
         }
         for (int i = 0; i < gelatinVertices.Length; i++) // loop through all vertices in the mesh
         {
@@ -69,10 +69,10 @@ public class Water : MonoBehaviour
             // set new vertex positions to the array
             vertexArray[gelatinVertices[i].ID] = Vector3.Lerp(vertexArray[gelatinVertices[i].ID], target, intensity);
             
+            MeshClone.vertices = vertexArray;
+
             float randTime = Random.Range(0, .01f);
             yield return new WaitForSeconds(timeBetweenVertices + randTime);
-
-            MeshClone.vertices = vertexArray;
         }
         //MeshClone.vertices = vertexArray; // set the clone mesh equal to the edited array of vertices
 

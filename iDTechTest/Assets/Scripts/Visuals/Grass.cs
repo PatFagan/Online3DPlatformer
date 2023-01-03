@@ -49,7 +49,7 @@ public class Grass : MonoBehaviour
         for (int i = 0; i < gelatinVertices.Length; i++) // loop through all vertices in the mesh
         {
             Vector3 target = transform.TransformPoint(vertexArray[i]);
-            target += grassMov * (i/2); // get current vertex pos in world space
+            target += grassMov * (i); // get current vertex pos in world space
             gelatinVertices[i].Jiggle(target, stiffness, damping); // jiggle the current vertex
             target = transform.InverseTransformPoint(gelatinVertices[i].position); // get pos of new vertex
             // set new vertex positions to the array
@@ -72,20 +72,6 @@ public class Grass : MonoBehaviour
             float randTime = Random.Range(0, .01f);
             yield return new WaitForSeconds(timeBetweenVertices + randTime);
 
-            MeshClone.vertices = vertexArray;
-        }
-        for (int i = 0; i < gelatinVertices.Length; i++) // loop through all vertices in the mesh
-        {
-            Vector3 target = transform.TransformPoint(vertexArray[i]);
-            target += grassMov * (i/2); // get current vertex pos in world space
-            gelatinVertices[i].Jiggle(target, stiffness, damping); // jiggle the current vertex
-            target = transform.InverseTransformPoint(gelatinVertices[i].position); // get pos of new vertex
-            // set new vertex positions to the array
-            vertexArray[gelatinVertices[i].ID] = Vector3.Lerp(vertexArray[gelatinVertices[i].ID], target, intensity);
-            
-            float randTime = Random.Range(0, .01f);
-            yield return new WaitForSeconds(timeBetweenVertices + randTime);
-            
             MeshClone.vertices = vertexArray;
         }
         //MeshClone.vertices = vertexArray; // set the clone mesh equal to the edited array of vertices
