@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 
-public class SpawnOnDeath : NetworkBehaviour
+public class SpawnOnDeath : MonoBehaviour
 {
     HealthManager healthScript;
     public GameObject[] spawnedObjectArray;
@@ -24,8 +23,8 @@ public class SpawnOnDeath : NetworkBehaviour
             int rand = Random.Range(0, spawnedObjectArray.Length);
             // and spawns it
             GameObject nextSpawn = Instantiate(spawnedObjectArray[rand], transform.position, spawnedObjectArray[rand].transform.rotation);
-            NetworkServer.Spawn(nextSpawn);
-            NetworkServer.Destroy(gameObject);
+            Instantiate(nextSpawn);
+            Destroy(gameObject);
         }
     }
 }

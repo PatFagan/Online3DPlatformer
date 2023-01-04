@@ -12,6 +12,7 @@ TagManager:
   - LocalPlayer
   - Ground
   - Ability
+  - Lava
   layers:
   - Default
   - TransparentFX

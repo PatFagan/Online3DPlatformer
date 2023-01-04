@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using Mirror;
 
-public class CoinTracker : NetworkBehaviour
+public class CoinTracker : MonoBehaviour
 {
     public TMP_Text coinScore; // gets the text box component
 
@@ -23,27 +22,22 @@ public class CoinTracker : NetworkBehaviour
 
     void FixedUpdate()
     {
-        if (isLocalPlayer)
-        {
-            coinScore.text = coinsCollected.ToString(); // change the coin ui text
-            coinUI.fillAmount = coinsCollected / 10f;
-        }
-        else if (!isLocalPlayer)
-        {
-            coinScore.text = ""; // change the coin ui text
-            coinUI.fillAmount = 0f;
-        }
+        coinScore.text = coinsCollected.ToString(); // change the coin ui text
+        coinUI.fillAmount = coinsCollected / 10f;
     }
 
     // runs when a trigger has been triggered
     void OnTriggerEnter(Collider collider)
     {
         // check if the collider is the coin
-        if (collider.gameObject.tag == "Coin" && coinsCollected < coinMax && isLocalPlayer)
+        if (collider.gameObject.tag == "Coin" && coinsCollected < coinMax)
         {
             coinsCollected++; // add to the coin score
-            playerHealth.health++;
-            NetworkServer.Destroy(collider.gameObject); // destroy the coin
+
+            if (playerHealth.health < playerHealth.maxHealth)
+                playerHealth.health++;
+                
+            Destroy(collider.gameObject); // destroy the coin
         }
     }
 }

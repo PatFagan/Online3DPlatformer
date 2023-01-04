@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Mirror;
 
-public class PlayerHealth : NetworkBehaviour
+public class PlayerHealth : MonoBehaviour
 {
-    public int health, maxHealth;
+    public float health, maxHealth;
     public string[] damageTag = { "tag", "tag", "tag", "tag" };
+    public string[] dotDamageTag = { "tag", "tag", "tag", "tag" };
+    bool checkDot = false;
 
     float immunityTimer = 0f;
 
@@ -22,10 +23,7 @@ public class PlayerHealth : NetworkBehaviour
     {
         playerMovementScript = GetComponent<TranslateMovement>();
 
-        if (!isLocalPlayer)
-        {
-            healthBar.fillAmount = 0f;
-        }
+        healthBar.fillAmount = 0f;
     }
 
     // Update is called once per frame
@@ -34,8 +32,7 @@ public class PlayerHealth : NetworkBehaviour
         immunityTimer -= Time.deltaTime;
         // print(immunityTimer);
 
-        if (isLocalPlayer)
-            HealthCheck();
+        HealthCheck();
     }
 
     void HealthCheck()
@@ -59,23 +56,53 @@ public class PlayerHealth : NetworkBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        if (isLocalPlayer)
+        if (immunityTimer < 0)
         {
-            if (immunityTimer < 0)
+            for (int index = 0; index < damageTag.Length; index++)
             {
-                for (int index = 0; index < damageTag.Length; index++)
+                if (collider.gameObject.tag == damageTag[index])
                 {
-                    if (collider.gameObject.tag == damageTag[index])
-                    {
-                        // take off health
-                        health--;
+                    // take off health
+                    health--;
 
-                        // reset our immunity timer
-                        immunityTimer = 1f;
-                    }
+                    // reset our immunity timer
+                    immunityTimer = 1f;
                 }
             }
-        } 
 
+            for (int index = 0; index < dotDamageTag.Length; index++)
+            {
+                if (collider.gameObject.tag == dotDamageTag[index])
+                {
+                    checkDot = true;
+                    StartCoroutine(DamageOverTime());
+                }
+            }
+        }
+    }
+
+    void OnTriggerExit(Collider collider)
+    {
+        for (int index = 0; index < dotDamageTag.Length; index++)
+        {
+            if (collider.gameObject.tag == dotDamageTag[index])
+            {
+                checkDot = false;
+            }
+        }
+    }
+
+    IEnumerator DamageOverTime()
+    {
+        // take off health
+        health -= .25f;
+
+        // reset our immunity timer
+        immunityTimer = 1f;
+
+        yield return new WaitForSeconds(immunityTimer);
+
+        if (checkDot)
+            StartCoroutine(DamageOverTime());
     }
 }

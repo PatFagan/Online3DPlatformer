@@ -36,8 +36,6 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Flash()
     {
-        print("flash");  
-        
         Material mat = mesh.GetComponent<Renderer>().material;
 
         mat.SetColor("_EmissionColor", Color.white);

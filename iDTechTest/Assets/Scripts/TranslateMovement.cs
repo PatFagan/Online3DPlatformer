@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 
-public class TranslateMovement : NetworkBehaviour
+public class TranslateMovement : MonoBehaviour
 {
     // movement variables
     public float moveSpeed = 50f, rotLerp = 100f;
+    float swordMoveSpeed, defaultMoveSpeed;
     public float speedScalar = 200f, defaultSpeedScalar = 200f;
     public Rigidbody physicsComponent;
 
@@ -14,7 +14,8 @@ public class TranslateMovement : NetworkBehaviour
     bool isGrounded;
     float distToGround, dashCooldown = 0f;
     public float jumpForce = 2300f, dashForce = 800f, dashTimeout = 40f;
-    public float wallClimbDistance = 2f, extraGravity = 20f;
+    public float wallClimbDistance = 2f, extraGravity;
+    int jumpToken = 1;
 
     // wall jump variables
     bool nearWall = false;
@@ -36,28 +37,58 @@ public class TranslateMovement : NetworkBehaviour
         physicsComponent = gameObject.GetComponent<Rigidbody>();
         distToGround = GetComponent<Collider>().bounds.extents.y;
         gameObject.name = "Player";
+
+        // set sword move speed variables
+        swordMoveSpeed = moveSpeed / 2f;
+        defaultMoveSpeed = moveSpeed; 
     }
 
     // runs once per frame
     void Update()
     {
-        if (isLocalPlayer)
+        Movement();
+
+        Jump();
+
+        Dash();
+
+        WallClimb();
+
+        SwordSlash();
+        
+        FallSpeed();
+
+        GroundPound();
+
+        DoubleJump();
+    }
+
+    void GroundPound()
+    {
+        if (Input.GetButtonDown("GroundPound") && !isGrounded)
         {
-            Movement();
-
-            Jump();
-
-            Dash();
-
-            WallClimb();
-
-            SwordSlash();
+            dashSound.Play();
+            physicsComponent.AddForce(new Vector3(0f, -jumpForce*3 * speedScalar, 
+                0f), ForceMode.Force);
         }
     }
 
-    void FixedUpdate()
+    void DoubleJump()
     {
-        FallSpeed();
+        // double jump if off the ground/walls and you have a jump token
+        if (Input.GetButtonDown("Jump") && !isGrounded && jumpToken > 0 && !nearWall)
+        {
+            dashSound.Play();
+            physicsComponent.AddForce(new Vector3(0f, jumpForce * speedScalar, 
+                0f), ForceMode.Force);
+            jumpToken--;
+        }
+
+        // if grounded, gain your double jump back
+        if (isGrounded)
+        {
+            jumpToken = 1;
+        }
     }
 
     void WallClimb()
@@ -65,12 +96,10 @@ public class TranslateMovement : NetworkBehaviour
         if (!pauseWallRaycast)
             wallDetectionDirection = transform.forward;
 
-        //print(wallDetectionDirection);
-        //print(nearWall);
         nearWall = Physics.Raycast(transform.position, wallDetectionDirection, wallClimbDistance);
 
         // wall climb
-        if (Input.GetButtonDown("Jump") && nearWall)
+        if (Input.GetButtonDown("Jump") && nearWall && !isGrounded)
         {
             jumpSound.Play();
             StartCoroutine(WallClimbForce());
@@ -90,7 +119,7 @@ public class TranslateMovement : NetworkBehaviour
     void Jump()
     {
         // check if grounded
-        isGrounded = Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.5f);
+        isGrounded = Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.75f);
         
         // add jump force on button press
         if (Input.GetButtonDown("Jump") && isGrounded)
@@ -107,9 +136,9 @@ public class TranslateMovement : NetworkBehaviour
     void FallSpeed()
     {
         // increase fall speed
-        if (physicsComponent.velocity.y < -0.1 && dashCooldown <= dashTimeout * 3/4)
+        if (dashCooldown <= dashTimeout * 3/4 && !isGrounded) // physicsComponent.velocity.y < -0.1 && 
         {
-            physicsComponent.velocity += Vector3.up * Physics.gravity.y * extraGravity;
+            physicsComponent.velocity -= Vector3.up * extraGravity;
         }
     }
 
@@ -123,7 +152,7 @@ public class TranslateMovement : NetworkBehaviour
             physicsComponent.AddForce(new Vector3(physicsComponent.velocity.x * dashForce * speedScalar, 
                 0f, physicsComponent.velocity.z * dashForce * speedScalar), ForceMode.Force);
             dashCooldown = dashTimeout;
-            physicsComponent.velocity = new Vector3(0f, 0f, 0f);
+            //physicsComponent.velocity = new Vector3(0f, 0f, 0f);
         }
     }
 
@@ -162,16 +191,17 @@ public class TranslateMovement : NetworkBehaviour
     {
         if (Input.GetButtonDown("Shoot") && swordCooldownTimer < 0f)
         {
-            GameObject nextSpawn = Instantiate(sword, transform.position, sword.transform.rotation);
-            NetworkServer.Spawn(nextSpawn);
+            Instantiate(sword, transform.position, sword.transform.rotation);
             swordCooldownTimer = swordCooldownTime;
+            StartCoroutine(SwordSlowSpeed());
         }
         swordCooldownTimer -= Time.deltaTime;
     }
 
-    public override void OnStartLocalPlayer()
+    IEnumerator SwordSlowSpeed()
     {
-        base.OnStartLocalPlayer();
-        gameObject.tag = "LocalPlayer";
+        moveSpeed = swordMoveSpeed;
+        yield return new WaitUntil(() => swordCooldownTimer < .1f);
+        moveSpeed = defaultMoveSpeed;
     }
 }

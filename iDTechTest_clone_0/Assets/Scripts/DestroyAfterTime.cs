@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 
-public class DestroyAfterTime : NetworkBehaviour
+public class DestroyAfterTime : MonoBehaviour
 {
     public float lifetime;
 
@@ -16,6 +15,6 @@ public class DestroyAfterTime : NetworkBehaviour
     IEnumerator DestroyAfterLifetime()
     {
         yield return new WaitForSeconds(lifetime);
-        NetworkServer.Destroy(gameObject);
+        Destroy(gameObject);
     }
 }
