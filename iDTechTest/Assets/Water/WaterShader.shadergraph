@@ -158,7 +158,63 @@
             },
             "m_InputSlot": {
                 "m_Node": {
+                    "m_Id": "0f56dca4039e4fe78106e278edde7dfc"
+                },
+                "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "6b448c1e0bec4a00817a4fbdb42e9871"
+                },
+                "m_SlotId": 2
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "2ad8fbfd0b4641fd82b3985dfb07c50b"
+                },
+                "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "6b448c1e0bec4a00817a4fbdb42e9871"
+                },
+                "m_SlotId": 2
+            },
+            "m_InputSlot": {
+                "m_Node": {
                     "m_Id": "2c78255a75464e03b3fb878bc7d377a1"
+                },
+                "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "6b448c1e0bec4a00817a4fbdb42e9871"
+                },
+                "m_SlotId": 2
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "90b5db2791234eae931cb1d3910d6c0d"
+                },
+                "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "6b448c1e0bec4a00817a4fbdb42e9871"
+                },
+                "m_SlotId": 2
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "f64e81daa7ff4d38a40796473faa2d0b"
                 },
                 "m_SlotId": 0
             }
@@ -194,8 +250,8 @@
     ],
     "m_VertexContext": {
         "m_Position": {
-            "x": 174.40000915527345,
-            "y": -375.20001220703127
+            "x": 174.40003967285157,
+            "y": -262.39996337890627
         },
         "m_Blocks": [
             {

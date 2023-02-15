@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4414528965287547870}
   - component: {fileID: 1920637895789766420}
   - component: {fileID: 965719050455083974}
+  - component: {fileID: 2079436601113687248}
   m_Layer: 0
   m_Name: flipped-grass
   m_TagString: Untagged
@@ -103,6 +104,20 @@ MonoBehaviour:
   yOffset: 0
   zOffset: 0
   timeBetweenVertices: 0.02
+--- !u!64 &2079436601113687248
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119210758840796865}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: c362530f1465f7b4da8d2e2eb68a93c5, type: 3}
 --- !u!1 &119210759276106713
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,6 +130,7 @@ GameObject:
   - component: {fileID: 4414528963711452870}
   - component: {fileID: 1920637897499816460}
   - component: {fileID: 965719050213233945}
+  - component: {fileID: 3892335052681549071}
   m_Layer: 0
   m_Name: flipped-grass (1)
   m_TagString: Untagged
@@ -206,6 +222,20 @@ MonoBehaviour:
   yOffset: 0
   zOffset: 0
   timeBetweenVertices: 0.02
+--- !u!64 &3892335052681549071
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119210759276106713}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: c362530f1465f7b4da8d2e2eb68a93c5, type: 3}
 --- !u!1 &965719052117133556
 GameObject:
   m_ObjectHideFlags: 0
